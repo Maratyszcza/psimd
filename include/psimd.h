@@ -54,13 +54,73 @@
 	#define PSIMD_HAVE_U64 0
 	#define PSIMD_HAVE_S64 0
 
-	typedef float    psimd_f32 __attribute__((vector_size(16), aligned(4)));
-	typedef uint8_t  psimd_u8  __attribute__((vector_size(16), aligned(1)));
 	typedef int8_t   psimd_s8  __attribute__((vector_size(16), aligned(1)));
-	typedef uint16_t psimd_u16 __attribute__((vector_size(16), aligned(2)));
+	typedef uint8_t  psimd_u8  __attribute__((vector_size(16), aligned(1)));
 	typedef int16_t  psimd_s16 __attribute__((vector_size(16), aligned(2)));
-	typedef uint32_t psimd_u32 __attribute__((vector_size(16), aligned(4)));
+	typedef uint16_t psimd_u16 __attribute__((vector_size(16), aligned(2)));
 	typedef int32_t  psimd_s32 __attribute__((vector_size(16), aligned(4)));
+	typedef uint32_t psimd_u32 __attribute__((vector_size(16), aligned(4)));
+	typedef float    psimd_f32 __attribute__((vector_size(16), aligned(4)));
+
+	typedef struct {
+		psimd_s8 lo;
+		psimd_s8 hi;
+	} psimd_s8x2;
+
+	typedef struct {
+		psimd_u8 lo;
+		psimd_u8 hi;
+	} psimd_u8x2;
+
+	typedef struct {
+		psimd_s16 lo;
+		psimd_s16 hi;
+	} psimd_s16x2;
+
+	typedef struct {
+		psimd_u16 lo;
+		psimd_u16 hi;
+	} psimd_u16x2;
+
+	typedef struct {
+		psimd_s32 lo;
+		psimd_s32 hi;
+	} psimd_s32x2;
+
+	typedef struct {
+		psimd_u32 lo;
+		psimd_u32 hi;
+	} psimd_u32x2;
+
+	typedef struct {
+		psimd_f32 lo;
+		psimd_f32 hi;
+	} psimd_f32x2;
+
+	/* Bit casts */
+	PSIMD_INTRINSIC psimd_u32x2 psimd_cast_s32x2_u32x2(psimd_s32x2 v) {
+		return (psimd_u32x2) { .lo = (psimd_u32) v.lo, .hi = (psimd_u32) v.hi };
+	}
+
+	PSIMD_INTRINSIC psimd_f32x2 psimd_cast_s32x2_f32x2(psimd_s32x2 v) {
+		return (psimd_f32x2) { .lo = (psimd_f32) v.lo, .hi = (psimd_f32) v.hi };
+	}
+
+	PSIMD_INTRINSIC psimd_s32x2 psimd_cast_u32x2_s32x2(psimd_u32x2 v) {
+		return (psimd_s32x2) { .lo = (psimd_s32) v.lo, .hi = (psimd_s32) v.hi };
+	}
+
+	PSIMD_INTRINSIC psimd_f32x2 psimd_cast_u32x2_f32x2(psimd_u32x2 v) {
+		return (psimd_f32x2) { .lo = (psimd_f32) v.lo, .hi = (psimd_f32) v.hi };
+	}
+
+	PSIMD_INTRINSIC psimd_s32x2 psimd_cast_f32x2_s32x2(psimd_f32x2 v) {
+		return (psimd_s32x2) { .lo = (psimd_s32) v.lo, .hi = (psimd_s32) v.hi };
+	}
+
+	PSIMD_INTRINSIC psimd_u32x2 psimd_cast_f32x2_u32x2(psimd_f32x2 v) {
+		return (psimd_u32x2) { .lo = (psimd_u32) v.lo, .hi = (psimd_u32) v.hi };
+	}
 
 	/* Zero-initialization */
 	PSIMD_INTRINSIC psimd_s8 psimd_zero_s8(void) {
