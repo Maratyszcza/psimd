@@ -122,6 +122,56 @@
 		return (psimd_u32x2) { .lo = (psimd_u32) v.lo, .hi = (psimd_u32) v.hi };
 	}
 
+	/* Swap */
+	PSIMD_INTRINSIC void psimd_swap_s8(psimd_s8 a[1], psimd_s8 b[1]) {
+		const psimd_s8 new_a = *b;
+		const psimd_s8 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
+	PSIMD_INTRINSIC void psimd_swap_u8(psimd_u8 a[1], psimd_u8 b[1]) {
+		const psimd_u8 new_a = *b;
+		const psimd_u8 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
+	PSIMD_INTRINSIC void psimd_swap_s16(psimd_s16 a[1], psimd_s16 b[1]) {
+		const psimd_s16 new_a = *b;
+		const psimd_s16 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
+	PSIMD_INTRINSIC void psimd_swap_u16(psimd_u16 a[1], psimd_u16 b[1]) {
+		const psimd_u16 new_a = *b;
+		const psimd_u16 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
+	PSIMD_INTRINSIC void psimd_swap_s32(psimd_s32 a[1], psimd_s32 b[1]) {
+		const psimd_s32 new_a = *b;
+		const psimd_s32 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
+	PSIMD_INTRINSIC void psimd_swap_u32(psimd_u32 a[1], psimd_u32 b[1]) {
+		const psimd_u32 new_a = *b;
+		const psimd_u32 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
+	PSIMD_INTRINSIC void psimd_swap_f32(psimd_f32 a[1], psimd_f32 b[1]) {
+		const psimd_f32 new_a = *b;
+		const psimd_f32 new_b = *a;
+		*a = new_a;
+		*b = new_b;
+	}
+
 	/* Zero-initialization */
 	PSIMD_INTRINSIC psimd_s8 psimd_zero_s8(void) {
 		return (psimd_s8) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
