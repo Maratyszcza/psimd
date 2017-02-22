@@ -506,6 +506,72 @@
 			return __builtin_shuffle(a, b, (psimd_s32) { 2, 4+2, 3, 4+3 });
 		}
 	#endif
+
+	/* Vector reduce */
+	#if defined(__clang__)
+		PSIMD_INTRINSIC psimd_f32 psimd_allreduce_sum_f32(psimd_f32 v) {
+			const psimd_f32 temp = v + __builtin_shufflevector(v, v, 2, 3, 0, 1);
+			return temp + __builtin_shufflevector(temp, temp, 1, 0, 3, 2);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_allreduce_max_f32(psimd_f32 v) {
+			const psimd_f32 temp = psimd_max_f32(v, __builtin_shufflevector(v, v, 2, 3, 0, 1));
+			return psimd_max_f32(temp, __builtin_shufflevector(temp, temp, 1, 0, 3, 2));
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_allreduce_min_f32(psimd_f32 v) {
+			const psimd_f32 temp = psimd_min_f32(v, __builtin_shufflevector(v, v, 2, 3, 0, 1));
+			return psimd_min_f32(temp, __builtin_shufflevector(temp, temp, 1, 0, 3, 2));
+		}
+
+		PSIMD_INTRINSIC float psimd_reduce_sum_f32(psimd_f32 v) {
+			const psimd_f32 temp = v + __builtin_shufflevector(v, v, 2, 3, -1, -1);
+			const psimd_f32 result = temp + __builtin_shufflevector(temp, temp, 1, -1, -1, -1);
+			return result[0];
+		}
+
+		PSIMD_INTRINSIC float psimd_reduce_max_f32(psimd_f32 v) {
+			const psimd_f32 temp = psimd_max_f32(v, __builtin_shufflevector(v, v, 2, 3, -1, -1));
+			const psimd_f32 result = psimd_max_f32(temp, __builtin_shufflevector(temp, temp, 1, -1, -1, -1));
+			return result[0];
+		}
+
+		PSIMD_INTRINSIC float psimd_reduce_min_f32(psimd_f32 v) {
+			const psimd_f32 temp = psimd_min_f32(v, __builtin_shufflevector(v, v, 2, 3, -1, -1));
+			const psimd_f32 result = psimd_min_f32(temp, __builtin_shufflevector(temp, temp, 1, -1, -1, -1));
+			return result[0];
+		}
+	#else
+		PSIMD_INTRINSIC psimd_f32 psimd_allreduce_sum_f32(psimd_f32 v) {
+			const psimd_f32 temp = v + __builtin_shuffle(v, (psimd_s32) { 2, 3, 0, 1 });
+			return temp + __builtin_shuffle(temp, (psimd_s32) { 1, 0, 3, 2 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_allreduce_max_f32(psimd_f32 v) {
+			const psimd_f32 temp = psimd_max_f32(v, __builtin_shuffle(v, (psimd_s32) { 2, 3, 0, 1 }));
+			return psimd_max_f32(temp, __builtin_shuffle(temp, (psimd_s32) { 1, 0, 3, 2 }));
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_allreduce_min_f32(psimd_f32 v) {
+			const psimd_f32 temp = psimd_min_f32(v, __builtin_shuffle(v, (psimd_s32) { 2, 3, 0, 1 }));
+			return psimd_min_f32(temp, __builtin_shuffle(temp, (psimd_s32) { 1, 0, 3, 2 }));
+		}
+
+		PSIMD_INTRINSIC float psimd_reduce_sum_f32(psimd_f32 v) {
+			const psimd_f32 result = psimd_allreduce_sum_f32(v);
+			return result[0];
+		}
+
+		PSIMD_INTRINSIC float psimd_reduce_max_f32(psimd_f32 v) {
+			const psimd_f32 result = psimd_allreduce_max_f32(v);
+			return result[0];
+		}
+
+		PSIMD_INTRINSIC float psimd_reduce_min_f32(psimd_f32 v) {
+			const psimd_f32 result = psimd_allreduce_min_f32(v);
+			return result[0];
+		}
+	#endif
 #endif
 
 #endif /* PSIMD_H */
