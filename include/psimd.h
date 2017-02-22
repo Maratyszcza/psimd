@@ -10,10 +10,10 @@
 	#define PSIMD_INTRINSIC inline static
 #elif defined(__INTEL_COMPILER)
 	/* Intel compiler, even on Windows */
-	#define PSIMD_INTRINSIC inline static __attribute__((__always_inline__, __const__))
+	#define PSIMD_INTRINSIC inline static __attribute__((__always_inline__))
 #elif defined(__GNUC__)
 	/* GCC-compatible compiler (gcc/clang/icc) */
-	#define PSIMD_INTRINSIC inline static __attribute__((__always_inline__, __const__))
+	#define PSIMD_INTRINSIC inline static __attribute__((__always_inline__))
 #elif defined(_MSC_VER)
 	/* MSVC-compatible compiler (cl/icl/clang-cl) */
 	#define PSIMD_INTRINSIC __forceinline static
