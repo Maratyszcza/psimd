@@ -404,6 +404,36 @@
 		return (psimd_f32) psimd_blend_s32(mask, (psimd_s32) a, (psimd_s32) b);
 	}
 
+	/* Vector blend on sign */
+	PSIMD_INTRINSIC psimd_s8 psimd_signblend_s8(psimd_s8 x, psimd_s8 a, psimd_s8 b) {
+		return psimd_blend_s8(x >> psimd_splat_s8(7), a, b);
+	}
+
+	PSIMD_INTRINSIC psimd_u8 psimd_signblend_u8(psimd_s8 x, psimd_u8 a, psimd_u8 b) {
+		return psimd_blend_u8((psimd_u8) (x >> psimd_splat_s8(7)), a, b);
+	}
+
+	PSIMD_INTRINSIC psimd_s16 psimd_signblend_s16(psimd_s16 x, psimd_s16 a, psimd_s16 b) {
+		return psimd_blend_s16(x >> psimd_splat_s16(15), a, b);
+	}
+
+	PSIMD_INTRINSIC psimd_u16 psimd_signblend_u16(psimd_s16 x, psimd_u16 a, psimd_u16 b) {
+		return psimd_blend_u16((psimd_u16) (x >> psimd_splat_s16(15)), a, b);
+	}
+
+	PSIMD_INTRINSIC psimd_s32 psimd_signblend_s32(psimd_s32 x, psimd_s32 a, psimd_s32 b) {
+		return psimd_blend_s32(x >> psimd_splat_s32(31), a, b);
+	}
+
+	PSIMD_INTRINSIC psimd_u32 psimd_signblend_u32(psimd_s32 x, psimd_u32 a, psimd_u32 b) {
+		return psimd_blend_u32((psimd_u32) (x >> psimd_splat_s32(31)), a, b);
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_signblend_f32(psimd_f32 x, psimd_f32 a, psimd_f32 b) {
+		const psimd_s32 mask = (psimd_s32) x >> psimd_splat_s32(31);
+		return psimd_blend_f32(mask, a, b);
+	}
+
 	/* Vector absolute value */
 	PSIMD_INTRINSIC psimd_f32 psimd_abs_f32(psimd_f32 v) {
 		const psimd_s32 mask = (psimd_s32) psimd_splat_f32(-0.0f);
