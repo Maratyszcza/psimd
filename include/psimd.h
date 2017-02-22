@@ -375,6 +375,11 @@
 		return a * b;
 	}
 
+	/* Vector and */
+	PSIMD_INTRINSIC psimd_f32 psimd_andmask_f32(psimd_s32 mask, psimd_f32 v) {
+		return (psimd_f32) (mask & (psimd_s32) v);
+	}
+
 	/* Vector blend */
 	PSIMD_INTRINSIC psimd_s8 psimd_blend_s8(psimd_s8 mask, psimd_s8 a, psimd_s8 b) {
 		return (mask & a) | (~mask & b);
