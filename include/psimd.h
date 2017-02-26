@@ -259,6 +259,85 @@
 		return *((const psimd_f32*) address);
 	}
 
+	PSIMD_INTRINSIC psimd_f32 psimd_load1_f32(const void* address) {
+		return (psimd_f32) { *((const float*) address), 0.0f, 0.0f, 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load2_f32(const void* address) {
+		const float* address_f32 = (const float*) address;
+		return (psimd_f32) { address_f32[0], address_f32[1], 0.0f, 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load3_f32(const void* address) {
+		const float* address_f32 = (const float*) address;
+		return (psimd_f32) { address_f32[0], address_f32[1], address_f32[2], 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load4_f32(const void* address) {
+		return psimd_load_f32(address);
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load_stride2_f32(const void* address) {
+		const psimd_f32 v0x1x = psimd_load_f32(address);
+		const psimd_f32 vx2x3 = psimd_load_f32(address + 3 * sizeof(float));
+		#if defined(__clang__)
+			return __builtin_shufflevector(v0x1x, vx2x3, 0, 2, 5, 7);
+		#else
+			return __builtin_shuffle(v0x1x, vx2x3, (psimd_s32) { 0, 2, 5, 7 });
+		#endif
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load1_stride2_f32(const void* address) {
+		return psimd_load_f32(address);
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load2_stride2_f32(const void* address) {
+		const float* address_f32 = (const float*) address;
+		return (psimd_f32) { address_f32[0], address_f32[2], 0.0f, 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load3_stride2_f32(const void* address) {
+		const psimd_f32 v0x1x = psimd_load_f32(address);
+		const psimd_f32 v2zzz = psimd_load1_f32(address + 2 * sizeof(float));
+		#if defined(__clang__)
+			return __builtin_shufflevector(v0x1x, v2zzz, 0, 2, 4, 6);
+		#else
+			return __builtin_shuffle(v0x1x, v2zzz, (psimd_s32) { 0, 2, 4, 6 });
+		#endif
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load4_stride2_f32(const void* address) {
+		return psimd_load_stride2_f32(address);
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load_stride_f32(const void* address, size_t stride) {
+		const float* address0_f32 = (const float*) address;
+		const float* address1_f32 = address0_f32 + stride;
+		const float* address2_f32 = address1_f32 + stride;
+		const float* address3_f32 = address2_f32 + stride;
+		return (psimd_f32) { *address0_f32, *address1_f32, *address2_f32, *address3_f32 };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load1_stride_f32(const void* address, size_t stride) {
+		return psimd_load1_f32(address);
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load2_stride_f32(const void* address, size_t stride) {
+		const float* address_f32 = (const float*) address;
+		return (psimd_f32) { address_f32[0], address_f32[stride], 0.0f, 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load3_stride_f32(const void* address, size_t stride) {
+		const float* address0_f32 = (const float*) address;
+		const float* address1_f32 = address0_f32 + stride;
+		const float* address2_f32 = address1_f32 + stride;
+		return (psimd_f32) { *address0_f32, *address1_f32, *address2_f32, 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load4_stride_f32(const void* address, size_t stride) {
+		return psimd_load_stride_f32(address, stride);
+	}
+
 	/* Store vector */
 	PSIMD_INTRINSIC void psimd_store_s8(void* address, psimd_s8 value) {
 		*((psimd_s8*) address) = value;
@@ -286,6 +365,57 @@
 
 	PSIMD_INTRINSIC void psimd_store_f32(void* address, psimd_f32 value) {
 		*((psimd_f32*) address) = value;
+	}
+
+	PSIMD_INTRINSIC void psimd_store1_f32(void* address, psimd_f32 value) {
+		*((float*) address) = value[0];
+	}
+
+	PSIMD_INTRINSIC void psimd_store2_f32(void* address, psimd_f32 value) {
+		float* address_f32 = (float*) address;
+		address_f32[0] = value[0];
+		address_f32[1] = value[1];
+	}
+
+	PSIMD_INTRINSIC void psimd_store3_f32(void* address, psimd_f32 value) {
+		float* address_f32 = (float*) address;
+		address_f32[0] = value[0];
+		address_f32[1] = value[1];
+		address_f32[2] = value[2];
+	}
+
+	PSIMD_INTRINSIC void psimd_store4_f32(void* address, psimd_f32 value) {
+		psimd_store_f32(address, value);
+	}
+
+	PSIMD_INTRINSIC void psimd_store_stride_f32(void* address, size_t stride, psimd_f32 value) {
+		float* address0_f32 = (float*) address;
+		float* address1_f32 = address0_f32 + stride;
+		float* address2_f32 = address1_f32 + stride;
+		float* address3_f32 = address2_f32 + stride;
+		*address0_f32 = value[0];
+		*address1_f32 = value[1];
+		*address2_f32 = value[2];
+		*address3_f32 = value[3];
+	}
+
+	PSIMD_INTRINSIC void psimd_store1_stride_f32(void* address, size_t stride, psimd_f32 value) {
+		psimd_store1_f32(address, value);
+	}
+
+	PSIMD_INTRINSIC void psimd_store2_stride_f32(void* address, size_t stride, psimd_f32 value) {
+		float* address_f32 = (float*) address;
+		address_f32[0]      = value[0];
+		address_f32[stride] = value[1];
+	}
+
+	PSIMD_INTRINSIC void psimd_store3_stride_f32(void* address, size_t stride, psimd_f32 value) {
+		float* address0_f32 = (float*) address;
+		float* address1_f32 = address0_f32 + stride;
+		float* address2_f32 = address1_f32 + stride;
+		*address0_f32 = value[0];
+		*address1_f32 = value[1];
+		*address2_f32 = value[2];
 	}
 
 	/* Vector addition */
