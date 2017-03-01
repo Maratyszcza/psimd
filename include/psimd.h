@@ -38,7 +38,11 @@
 	#define PSIMD_C89_SYNTAX
 #endif
 
-#ifndef _MSC_VER
+#if defined(__cplusplus) && (__cplusplus >= 201103L)
+	#include <cstddef>
+	#include <cstdint>
+#elif !defined(__OPENCL_VERSION__)
+	#include <stddef.h>
 	#include <stdint.h>
 #endif
 
