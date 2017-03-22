@@ -283,7 +283,7 @@
 
 	PSIMD_INTRINSIC psimd_f32 psimd_load_stride2_f32(const void* address) {
 		const psimd_f32 v0x1x = psimd_load_f32(address);
-		const psimd_f32 vx2x3 = psimd_load_f32(address + 3 * sizeof(float));
+		const psimd_f32 vx2x3 = psimd_load_f32((const float*) address + 3);
 		#if defined(__clang__)
 			return __builtin_shufflevector(v0x1x, vx2x3, 0, 2, 5, 7);
 		#else
@@ -302,7 +302,7 @@
 
 	PSIMD_INTRINSIC psimd_f32 psimd_load3_stride2_f32(const void* address) {
 		const psimd_f32 v0x1x = psimd_load_f32(address);
-		const psimd_f32 v2zzz = psimd_load1_f32(address + 2 * sizeof(float));
+		const psimd_f32 v2zzz = psimd_load1_f32((const float*) address + 2);
 		#if defined(__clang__)
 			return __builtin_shufflevector(v0x1x, v2zzz, 0, 2, 4, 6);
 		#else
