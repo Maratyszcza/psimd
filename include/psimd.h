@@ -532,31 +532,59 @@
 
 	/* Vector blend */
 	PSIMD_INTRINSIC psimd_s8 psimd_blend_s8(psimd_s8 mask, psimd_s8 a, psimd_s8 b) {
-		return (mask & a) | (~mask & b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s8) vbslq_s8((uint8x16_t) mask, (int8x16_t) a, (int8x16_t) b);
+		#else
+			return (mask & a) | (~mask & b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u8 psimd_blend_u8(psimd_u8 mask, psimd_u8 a, psimd_u8 b) {
-		return (mask & a) | (~mask & b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u8) vbslq_u8((uint8x16_t) mask, (uint8x16_t) a, (uint8x16_t) b);
+		#else
+			return (mask & a) | (~mask & b);
+		#endif
 	}
 	
 	PSIMD_INTRINSIC psimd_s16 psimd_blend_s16(psimd_s16 mask, psimd_s16 a, psimd_s16 b) {
-		return (mask & a) | (~mask & b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s16) vbslq_s16((uint16x8_t) mask, (int16x8_t) a, (int16x8_t) b);
+		#else
+			return (mask & a) | (~mask & b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u16 psimd_blend_u16(psimd_u16 mask, psimd_u16 a, psimd_u16 b) {
-		return (mask & a) | (~mask & b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u16) vbslq_u16((uint16x8_t) mask, (uint16x8_t) a, (uint16x8_t) b);
+		#else
+			return (mask & a) | (~mask & b);
+		#endif
 	}
 	
 	PSIMD_INTRINSIC psimd_s32 psimd_blend_s32(psimd_s32 mask, psimd_s32 a, psimd_s32 b) {
-		return (mask & a) | (~mask & b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s32) vbslq_s32((uint32x4_t) mask, (int32x4_t) a, (int32x4_t) b);
+		#else
+			return (mask & a) | (~mask & b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u32 psimd_blend_u32(psimd_u32 mask, psimd_u32 a, psimd_u32 b) {
-		return (mask & a) | (~mask & b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u32) vbslq_u32((uint32x4_t) mask, (uint32x4_t) a, (uint32x4_t) b);
+		#else
+			return (mask & a) | (~mask & b);
+		#endif
 	}
 	
 	PSIMD_INTRINSIC psimd_f32 psimd_blend_f32(psimd_s32 mask, psimd_f32 a, psimd_f32 b) {
-		return (psimd_f32) psimd_blend_s32(mask, (psimd_s32) a, (psimd_s32) b);
+		#if defined(__ARM_NEON__)
+			return (psimd_f32) vbslq_f32((uint32x4_t) mask, (float32x4_t) a, (float32x4_t) b);
+		#else
+			return (psimd_f32) psimd_blend_s32(mask, (psimd_s32) a, (psimd_s32) b);
+		#endif
 	}
 
 	/* Vector blend on sign */
