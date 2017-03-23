@@ -28,6 +28,10 @@
 	#define PSIMD_INTRINSIC static
 #endif
 
+#if defined(__ARM_NEON__)
+	#include <arm_neon.h>
+#endif
+
 #if defined(__cplusplus)
 	#define PSIMD_CXX_SYNTAX
 #elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L)
@@ -448,7 +452,11 @@
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_add_f32(psimd_f32 a, psimd_f32 b) {
-		return a + b;
+		#if defined(__ARM_ARCH_7A__) && defined(__ARM_NEON__) && !defined(__FAST_MATH__)
+			return (psimd_f32) vaddq_f32((float32x4_t) a, (float32x4_t) b);
+		#else
+			return a + b;
+		#endif
 	}
 
 	/* Vector subtraction */
@@ -477,7 +485,11 @@
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_sub_f32(psimd_f32 a, psimd_f32 b) {
-		return a - b;
+		#if defined(__ARM_ARCH_7A__) && defined(__ARM_NEON__) && !defined(__FAST_MATH__)
+			return (psimd_f32) vsubq_f32((float32x4_t) a, (float32x4_t) b);
+		#else
+			return a - b;
+		#endif
 	}
 
 	/* Vector multiplication */
@@ -506,7 +518,11 @@
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_mul_f32(psimd_f32 a, psimd_f32 b) {
-		return a * b;
+		#if defined(__ARM_ARCH_7A__) && defined(__ARM_NEON__) && !defined(__FAST_MATH__)
+			return (psimd_f32) vmulq_f32((float32x4_t) a, (float32x4_t) b);
+		#else
+			return a * b;
+		#endif
 	}
 
 	/* Vector and */
@@ -587,60 +603,116 @@
 
 	/* Vector maximum */
 	PSIMD_INTRINSIC psimd_s8 psimd_max_s8(psimd_s8 a, psimd_s8 b) {
-		return psimd_blend_s8(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s8) vmaxq_s8((int8x16_t) a, (int8x16_t) b);
+		#else
+			return psimd_blend_s8(a > b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u8 psimd_max_u8(psimd_u8 a, psimd_u8 b) {
-		return psimd_blend_u8(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u8) vmaxq_u8((uint8x16_t) a, (uint8x16_t) b);
+		#else
+			return psimd_blend_u8(a > b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_s16 psimd_max_s16(psimd_s16 a, psimd_s16 b) {
-		return psimd_blend_s16(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s16) vmaxq_s16((int16x8_t) a, (int16x8_t) b);
+		#else
+			return psimd_blend_s16(a > b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u16 psimd_max_u16(psimd_u16 a, psimd_u16 b) {
-		return psimd_blend_u16(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u16) vmaxq_u16((uint16x8_t) a, (uint16x8_t) b);
+		#else
+			return psimd_blend_u16(a > b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_s32 psimd_max_s32(psimd_s32 a, psimd_s32 b) {
-		return psimd_blend_s32(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s32) vmaxq_s32((int32x4_t) a, (int32x4_t) b);
+		#else
+			return psimd_blend_s32(a > b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u32 psimd_max_u32(psimd_u32 a, psimd_u32 b) {
-		return psimd_blend_u32(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u32) vmaxq_u32((uint32x4_t) a, (uint32x4_t) b);
+		#else
+			return psimd_blend_u32(a > b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_max_f32(psimd_f32 a, psimd_f32 b) {
-		return psimd_blend_f32(a > b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_f32) vmaxq_f32((float32x4_t) a, (float32x4_t) b);
+		#else
+			return psimd_blend_f32(a > b, a, b);
+		#endif
 	}
 
 	/* Vector minimum */
 	PSIMD_INTRINSIC psimd_s8 psimd_min_s8(psimd_s8 a, psimd_s8 b) {
-		return psimd_blend_s8(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s8) vminq_s8((int8x16_t) a, (int8x16_t) b);
+		#else
+			return psimd_blend_s8(a < b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u8 psimd_min_u8(psimd_u8 a, psimd_u8 b) {
-		return psimd_blend_u8(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u8) vminq_u8((uint8x16_t) a, (uint8x16_t) b);
+		#else
+			return psimd_blend_u8(a < b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_s16 psimd_min_s16(psimd_s16 a, psimd_s16 b) {
-		return psimd_blend_s16(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s16) vminq_s16((int16x8_t) a, (int16x8_t) b);
+		#else
+			return psimd_blend_s16(a < b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u16 psimd_min_u16(psimd_u16 a, psimd_u16 b) {
-		return psimd_blend_u16(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u16) vminq_u16((uint16x8_t) a, (uint16x8_t) b);
+		#else
+			return psimd_blend_u16(a < b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_s32 psimd_min_s32(psimd_s32 a, psimd_s32 b) {
-		return psimd_blend_s32(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_s32) vminq_s32((int32x4_t) a, (int32x4_t) b);
+		#else
+			return psimd_blend_s32(a < b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_u32 psimd_min_u32(psimd_u32 a, psimd_u32 b) {
-		return psimd_blend_u32(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_u32) vminq_u32((uint32x4_t) a, (uint32x4_t) b);
+		#else
+			return psimd_blend_u32(a < b, a, b);
+		#endif
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_min_f32(psimd_f32 a, psimd_f32 b) {
-		return psimd_blend_f32(a < b, a, b);
+		#if defined(__ARM_NEON__)
+			return (psimd_f32) vminq_f32((float32x4_t) a, (float32x4_t) b);
+		#else
+			return psimd_blend_f32(a < b, a, b);
+		#endif
 	}
 
 	/* Vector unpack */
