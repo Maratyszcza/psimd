@@ -743,86 +743,252 @@
 		#endif
 	}
 
-	/* Vector unpack */
+	/* Interleaving of vector elements */
 	#if defined(__clang__)
-		PSIMD_INTRINSIC psimd_s16 psimd_unpacklo_s16(psimd_s16 a, psimd_s16 b) {
+		PSIMD_INTRINSIC psimd_s16 psimd_interleave_lo_s16(psimd_s16 a, psimd_s16 b) {
 			return __builtin_shufflevector(a, b, 0, 8+0, 1, 8+1, 2, 8+2, 3, 8+3);
 		}
 
-		PSIMD_INTRINSIC psimd_s16 psimd_unpackhi_s16(psimd_s16 a, psimd_s16 b) {
+		PSIMD_INTRINSIC psimd_s16 psimd_interleave_hi_s16(psimd_s16 a, psimd_s16 b) {
 			return __builtin_shufflevector(a, b, 4, 8+4, 5, 8+5, 6, 8+6, 7, 8+7);
 		}
 
-		PSIMD_INTRINSIC psimd_u16 psimd_unpacklo_u16(psimd_u16 a, psimd_u16 b) {
+		PSIMD_INTRINSIC psimd_u16 psimd_interleave_lo_u16(psimd_u16 a, psimd_u16 b) {
 			return __builtin_shufflevector(a, b, 0, 8+0, 1, 8+1, 2, 8+2, 3, 8+3);
 		}
 
-		PSIMD_INTRINSIC psimd_u16 psimd_unpackhi_u16(psimd_u16 a, psimd_u16 b) {
+		PSIMD_INTRINSIC psimd_u16 psimd_interleave_hi_u16(psimd_u16 a, psimd_u16 b) {
 			return __builtin_shufflevector(a, b, 4, 8+4, 5, 8+5, 6, 8+6, 7, 8+7);
 		}
 
-		PSIMD_INTRINSIC psimd_s32 psimd_unpacklo_s32(psimd_s32 a, psimd_s32 b) {
+		PSIMD_INTRINSIC psimd_s32 psimd_interleave_lo_s32(psimd_s32 a, psimd_s32 b) {
 			return __builtin_shufflevector(a, b, 0, 4+0, 1, 4+1);
 		}
 
-		PSIMD_INTRINSIC psimd_s32 psimd_unpackhi_s32(psimd_s32 a, psimd_s32 b) {
+		PSIMD_INTRINSIC psimd_s32 psimd_interleave_hi_s32(psimd_s32 a, psimd_s32 b) {
 			return __builtin_shufflevector(a, b, 2, 4+2, 3, 4+3);
 		}
 
-		PSIMD_INTRINSIC psimd_u32 psimd_unpacklo_u32(psimd_u32 a, psimd_u32 b) {
+		PSIMD_INTRINSIC psimd_u32 psimd_interleave_lo_u32(psimd_u32 a, psimd_u32 b) {
 			return __builtin_shufflevector(a, b, 0, 4+0, 1, 4+1);
 		}
 
-		PSIMD_INTRINSIC psimd_u32 psimd_unpackhi_u32(psimd_u32 a, psimd_u32 b) {
+		PSIMD_INTRINSIC psimd_u32 psimd_interleave_hi_u32(psimd_u32 a, psimd_u32 b) {
 			return __builtin_shufflevector(a, b, 2, 4+2, 3, 4+3);
 		}
 
-		PSIMD_INTRINSIC psimd_f32 psimd_unpacklo_f32(psimd_f32 a, psimd_f32 b) {
+		PSIMD_INTRINSIC psimd_f32 psimd_interleave_lo_f32(psimd_f32 a, psimd_f32 b) {
 			return __builtin_shufflevector(a, b, 0, 4+0, 1, 4+1);
 		}
 
-		PSIMD_INTRINSIC psimd_f32 psimd_unpackhi_f32(psimd_f32 a, psimd_f32 b) {
+		PSIMD_INTRINSIC psimd_f32 psimd_interleave_hi_f32(psimd_f32 a, psimd_f32 b) {
 			return __builtin_shufflevector(a, b, 2, 4+2, 3, 4+3);
 		}
 	#else
-		PSIMD_INTRINSIC psimd_s16 psimd_unpacklo_s16(psimd_s16 a, psimd_s16 b) {
+		PSIMD_INTRINSIC psimd_s16 psimd_interleave_lo_s16(psimd_s16 a, psimd_s16 b) {
 			return __builtin_shuffle(a, b, (psimd_s16) { 0, 8+0, 1, 8+1, 2, 8+2, 3, 8+3 });
 		}
 
-		PSIMD_INTRINSIC psimd_s16 psimd_unpackhi_s16(psimd_s16 a, psimd_s16 b) {
+		PSIMD_INTRINSIC psimd_s16 psimd_interleave_hi_s16(psimd_s16 a, psimd_s16 b) {
 			return __builtin_shuffle(a, b, (psimd_s16) { 4, 8+4, 5, 8+5, 6, 8+6, 7, 8+7 });
 		}
 
-		PSIMD_INTRINSIC psimd_u16 psimd_unpacklo_u16(psimd_u16 a, psimd_u16 b) {
+		PSIMD_INTRINSIC psimd_u16 psimd_interleave_lo_u16(psimd_u16 a, psimd_u16 b) {
 			return __builtin_shuffle(a, b, (psimd_s16) { 0, 8+0, 1, 8+1, 2, 8+2, 3, 8+3 });
 		}
 
-		PSIMD_INTRINSIC psimd_u16 psimd_unpackhi_u16(psimd_u16 a, psimd_u16 b) {
+		PSIMD_INTRINSIC psimd_u16 psimd_interleave_hi_u16(psimd_u16 a, psimd_u16 b) {
 			return __builtin_shuffle(a, b, (psimd_s16) { 4, 8+4, 5, 8+5, 6, 8+6, 7, 8+7 });
 		}
 
-		PSIMD_INTRINSIC psimd_s32 psimd_unpacklo_s32(psimd_s32 a, psimd_s32 b) {
+		PSIMD_INTRINSIC psimd_s32 psimd_interleave_lo_s32(psimd_s32 a, psimd_s32 b) {
 			return __builtin_shuffle(a, b, (psimd_s32) { 0, 4+0, 1, 4+1 });
 		}
 
-		PSIMD_INTRINSIC psimd_s32 psimd_unpackhi_s32(psimd_s32 a, psimd_s32 b) {
+		PSIMD_INTRINSIC psimd_s32 psimd_interleave_hi_s32(psimd_s32 a, psimd_s32 b) {
 			return __builtin_shuffle(a, b, (psimd_s32) { 2, 4+2, 3, 4+3 });
 		}
 
-		PSIMD_INTRINSIC psimd_u32 psimd_unpacklo_u32(psimd_u32 a, psimd_u32 b) {
+		PSIMD_INTRINSIC psimd_u32 psimd_interleave_lo_u32(psimd_u32 a, psimd_u32 b) {
 			return __builtin_shuffle(a, b, (psimd_s32) { 0, 4+0, 1, 4+1 });
 		}
 
-		PSIMD_INTRINSIC psimd_u32 psimd_unpackhi_u32(psimd_u32 a, psimd_u32 b) {
+		PSIMD_INTRINSIC psimd_u32 psimd_interleave_hi_u32(psimd_u32 a, psimd_u32 b) {
 			return __builtin_shuffle(a, b, (psimd_s32) { 2, 4+2, 3, 4+3 });
 		}
 
-		PSIMD_INTRINSIC psimd_f32 psimd_unpacklo_f32(psimd_f32 a, psimd_f32 b) {
+		PSIMD_INTRINSIC psimd_f32 psimd_interleave_lo_f32(psimd_f32 a, psimd_f32 b) {
 			return __builtin_shuffle(a, b, (psimd_s32) { 0, 4+0, 1, 4+1 });
 		}
 
-		PSIMD_INTRINSIC psimd_f32 psimd_unpackhi_f32(psimd_f32 a, psimd_f32 b) {
+		PSIMD_INTRINSIC psimd_f32 psimd_interleave_hi_f32(psimd_f32 a, psimd_f32 b) {
 			return __builtin_shuffle(a, b, (psimd_s32) { 2, 4+2, 3, 4+3 });
+		}
+	#endif
+
+	/* Concatenation of low/high vector elements */
+	#if defined(__clang__)
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_lo_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shufflevector(a, b, 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3);
+		}
+
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_hi_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shufflevector(a, b, 4, 5, 6, 7, 8+4, 8+5, 8+6, 8+7);
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_lo_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shufflevector(a, b, 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3);
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_hi_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shufflevector(a, b, 4, 5, 6, 7, 8+4, 8+5, 8+6, 8+7);
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_lo_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shufflevector(a, b, 0, 1, 4+0, 4+1);
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_hi_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shufflevector(a, b, 2, 3, 4+2, 4+3);
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_lo_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shufflevector(a, b, 0, 1, 4+0, 4+1);
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_hi_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shufflevector(a, b, 2, 3, 4+2, 4+3);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_lo_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shufflevector(a, b, 0, 1, 4+0, 4+1);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_hi_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shufflevector(a, b, 2, 3, 4+2, 4+3);
+		}
+	#else
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_lo_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3 });
+		}
+
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_hi_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 4, 5, 6, 7, 8+4, 8+5, 8+6, 8+7 });
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_lo_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3 });
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_hi_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 4, 5, 6, 7, 8+4, 8+5, 8+6, 8+7 });
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_lo_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 0, 1, 4+0, 4+1 });
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_hi_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 2, 3, 4+2, 4+3 });
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_lo_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 0, 1, 4+0, 4+1 });
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_hi_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 2, 3, 4+2, 4+3 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_lo_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 0, 1, 4+0, 4+1 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_hi_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 2, 3, 4+2, 4+3 });
+		}
+	#endif
+
+	/* Concatenation of even/odd vector elements */
+	#if defined(__clang__)
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_even_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shufflevector(a, b, 0, 2, 4, 6, 8+0, 8+2, 8+4, 8+6);
+		}
+
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_odd_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shufflevector(a, b, 1, 3, 5, 7, 8+1, 8+3, 8+5, 8+7);
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_even_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shufflevector(a, b, 0, 2, 4, 6, 8+0, 8+2, 8+4, 8+6);
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_odd_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shufflevector(a, b, 1, 3, 5, 7, 8+1, 8+3, 8+5, 8+7);
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_even_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shufflevector(a, b, 0, 2, 4+0, 4+2);
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_odd_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shufflevector(a, b, 1, 3, 4+1, 4+3);
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_even_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shufflevector(a, b, 0, 2, 4+0, 4+2);
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_odd_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shufflevector(a, b, 1, 3, 4+1, 4+3);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_even_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shufflevector(a, b, 0, 2, 4+0, 4+2);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_odd_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shufflevector(a, b, 1, 3, 4+1, 4+3);
+		}
+	#else
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_even_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 0, 2, 4, 6, 8+0, 8+2, 8+4, 8+6 });
+		}
+
+		PSIMD_INTRINSIC psimd_s16 psimd_concat_odd_s16(psimd_s16 a, psimd_s16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 1, 3, 5, 7, 8+1, 8+3, 8+5, 8+7 });
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_even_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 0, 2, 4, 6, 8+0, 8+2, 8+4, 8+6 });
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_concat_odd_u16(psimd_u16 a, psimd_u16 b) {
+			return __builtin_shuffle(a, b, (psimd_s16) { 1, 3, 5, 7, 8+1, 8+3, 8+5, 8+7 });
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_even_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 0, 2, 4+0, 4+2 });
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_concat_odd_s32(psimd_s32 a, psimd_s32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 1, 3, 4+1, 4+3 });
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_even_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 0, 2, 4+0, 4+2 });
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_concat_odd_u32(psimd_u32 a, psimd_u32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 1, 3, 4+1, 4+3 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_even_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 0, 2, 4+0, 4+2 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_concat_odd_f32(psimd_f32 a, psimd_f32 b) {
+			return __builtin_shuffle(a, b, (psimd_s32) { 1, 3, 4+1, 4+3 });
 		}
 	#endif
 
