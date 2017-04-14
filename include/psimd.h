@@ -743,6 +743,65 @@
 		#endif
 	}
 
+	/* Reversal of vector elements */
+	#if defined(__clang__)
+		PSIMD_INTRINSIC psimd_s8 psimd_reverse_s8(psimd_s8 v) {
+			return __builtin_shufflevector(v, v, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_u8 psimd_reverse_u8(psimd_u8 v) {
+			return __builtin_shufflevector(v, v, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_s16 psimd_reverse_s16(psimd_s16 v) {
+			return __builtin_shufflevector(v, v, 7, 6, 5, 4, 3, 2, 1, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_reverse_u16(psimd_u16 v) {
+			return __builtin_shufflevector(v, v, 7, 6, 5, 4, 3, 2, 1, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_reverse_s32(psimd_s32 v) {
+			return __builtin_shufflevector(v, v, 3, 2, 1, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_reverse_u32(psimd_u32 v) {
+			return __builtin_shufflevector(v, v, 3, 2, 1, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_reverse_f32(psimd_f32 v) {
+			return __builtin_shufflevector(v, v, 3, 2, 1, 0);
+		}
+	#else
+		PSIMD_INTRINSIC psimd_s8 psimd_reverse_s8(psimd_s8 v) {
+			return __builtin_shuffle(v, (psimd_s8) { 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_u8 psimd_reverse_u8(psimd_u8 v) {
+			return __builtin_shuffle(v, (psimd_s8) { 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_s16 psimd_reverse_s16(psimd_s16 v) {
+			return __builtin_shuffle(v, (psimd_s16) { 7, 6, 5, 4, 3, 2, 1, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_u16 psimd_reverse_u16(psimd_u16 v) {
+			return __builtin_shuffle(v, (psimd_s16) { 7, 6, 5, 4, 3, 2, 1, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_s32 psimd_reverse_s32(psimd_s32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 3, 2, 1, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_u32 psimd_reverse_u32(psimd_u32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 3, 2, 1, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_reverse_f32(psimd_f32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 3, 2, 1, 0 });
+		}
+	#endif
+
 	/* Interleaving of vector elements */
 	#if defined(__clang__)
 		PSIMD_INTRINSIC psimd_s16 psimd_interleave_lo_s16(psimd_s16 a, psimd_s16 b) {
