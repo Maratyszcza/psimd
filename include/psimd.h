@@ -743,6 +743,41 @@
 		#endif
 	}
 
+	/* Broadcast vector element */
+	#if defined(__clang__)
+		PSIMD_INTRINSIC psimd_f32 psimd_splat0_f32(psimd_f32 v) {
+			return __builtin_shufflevector(v, v, 0, 0, 0, 0);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_splat1_f32(psimd_f32 v) {
+			return __builtin_shufflevector(v, v, 1, 1, 1, 1);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_splat2_f32(psimd_f32 v) {
+			return __builtin_shufflevector(v, v, 2, 2, 2, 2);
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_splat3_f32(psimd_f32 v) {
+			return __builtin_shufflevector(v, v, 3, 3, 3, 3);
+		}
+	#else
+		PSIMD_INTRINSIC psimd_f32 psimd_splat0_f32(psimd_f32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 0, 0, 0, 0 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_splat1_f32(psimd_f32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 1, 1, 1, 1 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_splat2_f32(psimd_f32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 2, 2, 2, 2 });
+		}
+
+		PSIMD_INTRINSIC psimd_f32 psimd_splat3_f32(psimd_f32 v) {
+			return __builtin_shuffle(v, (psimd_s32) { 3, 3, 3, 3 });
+		}
+	#endif
+
 	/* Reversal of vector elements */
 	#if defined(__clang__)
 		PSIMD_INTRINSIC psimd_s8 psimd_reverse_s8(psimd_s8 v) {
