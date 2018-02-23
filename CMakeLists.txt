@@ -5,7 +5,7 @@ INCLUDE(GNUInstallDirs)
 # ---[ Project
 PROJECT(psimd C)
 
-# ---[ psimd librar
+# ---[ psimd library
 IF(${CMAKE_VERSION} VERSION_LESS "3.0")
   ADD_LIBRARY(psimd STATIC include/psimd.h)
   SET_TARGET_PROPERTIES(psimd PROPERTIES LINKER_LANGUAGE C)
