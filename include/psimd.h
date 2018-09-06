@@ -1017,6 +1017,26 @@
 
 	/* Concatenation of even/odd vector elements */
 	#if defined(__clang__)
+		PSIMD_INTRINSIC psimd_s8 psimd_concat_even_s8(psimd_s8 a, psimd_s8 b) {
+			return __builtin_shufflevector(a, b,
+				0, 2, 4, 6, 8, 10, 12, 14, 16+0, 16+2, 16+4, 16+6, 16+8, 16+10, 16+12, 16+14);
+		}
+
+		PSIMD_INTRINSIC psimd_s8 psimd_concat_odd_s8(psimd_s8 a, psimd_s8 b) {
+			return __builtin_shufflevector(a, b,
+				1, 3, 5, 7, 9, 11, 13, 15, 16+1, 16+3, 16+5, 16+7, 16+9, 16+11, 16+13, 16+15);
+		}
+
+		PSIMD_INTRINSIC psimd_u8 psimd_concat_even_u8(psimd_u8 a, psimd_u8 b) {
+			return __builtin_shufflevector(a, b,
+				0, 2, 4, 6, 8, 10, 12, 14, 16+0, 16+2, 16+4, 16+6, 16+8, 16+10, 16+12, 16+14);
+		}
+
+		PSIMD_INTRINSIC psimd_u8 psimd_concat_odd_u8(psimd_u8 a, psimd_u8 b) {
+			return __builtin_shufflevector(a, b,
+				1, 3, 5, 7, 9, 11, 13, 15, 16+1, 16+3, 16+5, 16+7, 16+9, 16+11, 16+13, 16+15);
+		}
+
 		PSIMD_INTRINSIC psimd_s16 psimd_concat_even_s16(psimd_s16 a, psimd_s16 b) {
 			return __builtin_shufflevector(a, b, 0, 2, 4, 6, 8+0, 8+2, 8+4, 8+6);
 		}
@@ -1057,6 +1077,26 @@
 			return __builtin_shufflevector(a, b, 1, 3, 4+1, 4+3);
 		}
 	#else
+		PSIMD_INTRINSIC psimd_s8 psimd_concat_even_s8(psimd_s8 a, psimd_s8 b) {
+			return __builtin_shuffle(a, b,
+				(psimd_s8) { 0, 2, 4, 6, 8, 10, 12, 14, 16+0, 16+2, 16+4, 16+6, 16+8, 16+10, 16+12, 16+14 });
+		}
+
+		PSIMD_INTRINSIC psimd_s8 psimd_concat_odd_s8(psimd_s8 a, psimd_s8 b) {
+			return __builtin_shuffle(a, b,
+				(psimd_s8) { 1, 3, 5, 7, 9, 11, 13, 15, 16+1, 16+3, 16+5, 16+7, 16+9, 16+11, 16+13, 16+15 });
+		}
+
+		PSIMD_INTRINSIC psimd_u8 psimd_concat_even_u8(psimd_u8 a, psimd_u8 b) {
+			return __builtin_shuffle(a, b,
+				(psimd_s8) { 0, 2, 4, 6, 8, 10, 12, 14, 16+0, 16+2, 16+4, 16+6, 16+8, 16+10, 16+12, 16+14 });
+		}
+
+		PSIMD_INTRINSIC psimd_u8 psimd_concat_odd_u8(psimd_u8 a, psimd_u8 b) {
+			return __builtin_shuffle(a, b,
+				(psimd_s8) { 1, 3, 5, 7, 9, 11, 13, 15, 16+1, 16+3, 16+5, 16+7, 16+9, 16+11, 16+13, 16+15 });
+		}
+
 		PSIMD_INTRINSIC psimd_s16 psimd_concat_even_s16(psimd_s16 a, psimd_s16 b) {
 			return __builtin_shuffle(a, b, (psimd_s16) { 0, 2, 4, 6, 8+0, 8+2, 8+4, 8+6 });
 		}
