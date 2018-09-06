@@ -743,6 +743,18 @@
 		#endif
 	}
 
+	PSIMD_INTRINSIC psimd_f32 psimd_cvt_s32_f32(psimd_s32 v) {
+		#if defined(__clang__)
+			return __builtin_convertvector(v, psimd_f32);
+		#elif defined(__ARM_NEON__) || defined(__ARM_NEON)
+			return (psimd_f32) vcvtq_f32_s32((int32x4_t) v);
+		#elif defined(__SSE2__)
+			return (psimd_f32) _mm_cvtepi32_ps((__m128i) v);
+		#else
+			return (psimd_f32) { (float) v[0], (float) v[1], (float) v[2], (float) v[3] };
+		#endif
+	}
+
 	/* Broadcast vector element */
 	#if defined(__clang__)
 		PSIMD_INTRINSIC psimd_f32 psimd_splat0_f32(psimd_f32 v) {
