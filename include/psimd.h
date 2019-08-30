@@ -323,8 +323,26 @@
 		return psimd_splat_f32(*((const float*) address));
 	}
 
+	PSIMD_INTRINSIC psimd_s32 psimd_load1_s32(const void* address) {
+		return (psimd_s32) { *((const int32_t*) address), 0, 0, 0 };
+	}
+
+	PSIMD_INTRINSIC psimd_u32 psimd_load1_u32(const void* address) {
+		return (psimd_u32) { *((const uint32_t*) address), 0, 0, 0 };
+	}
+
 	PSIMD_INTRINSIC psimd_f32 psimd_load1_f32(const void* address) {
 		return (psimd_f32) { *((const float*) address), 0.0f, 0.0f, 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_s32 psimd_load2_s32(const void* address) {
+		const int32_t* address_s32 = (const int32_t*) address;
+		return (psimd_s32) { address_s32[0], address_s32[1], 0, 0 };
+	}
+
+	PSIMD_INTRINSIC psimd_u32 psimd_load2_u32(const void* address) {
+		const uint32_t* address_u32 = (const uint32_t*) address;
+		return (psimd_u32) { address_u32[0], address_u32[1], 0, 0 };
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_load2_f32(const void* address) {
@@ -332,9 +350,27 @@
 		return (psimd_f32) { address_f32[0], address_f32[1], 0.0f, 0.0f };
 	}
 
+	PSIMD_INTRINSIC psimd_s32 psimd_load3_s32(const void* address) {
+		const int32_t* address_s32 = (const int32_t*) address;
+		return (psimd_s32) { address_s32[0], address_s32[1], address_s32[2], 0 };
+	}
+
+	PSIMD_INTRINSIC psimd_u32 psimd_load3_u32(const void* address) {
+		const uint32_t* address_u32 = (const uint32_t*) address;
+		return (psimd_u32) { address_u32[0], address_u32[1], address_u32[2], 0 };
+	}
+
 	PSIMD_INTRINSIC psimd_f32 psimd_load3_f32(const void* address) {
 		const float* address_f32 = (const float*) address;
 		return (psimd_f32) { address_f32[0], address_f32[1], address_f32[2], 0.0f };
+	}
+
+	PSIMD_INTRINSIC psimd_s32 psimd_load4_s32(const void* address) {
+		return psimd_load_s32(address);
+	}
+
+	PSIMD_INTRINSIC psimd_u32 psimd_load4_u32(const void* address) {
+		return psimd_load_u32(address);
 	}
 
 	PSIMD_INTRINSIC psimd_f32 psimd_load4_f32(const void* address) {
