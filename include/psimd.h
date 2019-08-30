@@ -295,6 +295,34 @@
 		return *((const psimd_f32*) address);
 	}
 
+	PSIMD_INTRINSIC psimd_s8 psimd_load_splat_s8(const void* address) {
+		return psimd_splat_s8(*((const int8_t*) address));
+	}
+
+	PSIMD_INTRINSIC psimd_u8 psimd_load_splat_u8(const void* address) {
+		return psimd_splat_u8(*((const uint8_t*) address));
+	}
+
+	PSIMD_INTRINSIC psimd_s16 psimd_load_splat_s16(const void* address) {
+		return psimd_splat_s16(*((const int16_t*) address));
+	}
+
+	PSIMD_INTRINSIC psimd_u16 psimd_load_splat_u16(const void* address) {
+		return psimd_splat_u16(*((const uint16_t*) address));
+	}
+
+	PSIMD_INTRINSIC psimd_s32 psimd_load_splat_s32(const void* address) {
+		return psimd_splat_s32(*((const int32_t*) address));
+	}
+
+	PSIMD_INTRINSIC psimd_u32 psimd_load_splat_u32(const void* address) {
+		return psimd_splat_u32(*((const uint32_t*) address));
+	}
+
+	PSIMD_INTRINSIC psimd_f32 psimd_load_splat_f32(const void* address) {
+		return psimd_splat_f32(*((const float*) address));
+	}
+
 	PSIMD_INTRINSIC psimd_f32 psimd_load1_f32(const void* address) {
 		return (psimd_f32) { *((const float*) address), 0.0f, 0.0f, 0.0f };
 	}
