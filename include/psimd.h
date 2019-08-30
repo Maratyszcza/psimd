@@ -403,8 +403,28 @@
 		*((psimd_f32*) address) = value;
 	}
 
+	PSIMD_INTRINSIC void psimd_store1_s32(void* address, psimd_s32 value) {
+		*((int32_t*) address) = value[0];
+	}
+
+	PSIMD_INTRINSIC void psimd_store1_u32(void* address, psimd_u32 value) {
+		*((uint32_t*) address) = value[0];
+	}
+
 	PSIMD_INTRINSIC void psimd_store1_f32(void* address, psimd_f32 value) {
 		*((float*) address) = value[0];
+	}
+
+	PSIMD_INTRINSIC void psimd_store2_s32(void* address, psimd_s32 value) {
+		int32_t* address_s32 = (int32_t*) address;
+		address_s32[0] = value[0];
+		address_s32[1] = value[1];
+	}
+
+	PSIMD_INTRINSIC void psimd_store2_u32(void* address, psimd_u32 value) {
+		uint32_t* address_u32 = (uint32_t*) address;
+		address_u32[0] = value[0];
+		address_u32[1] = value[1];
 	}
 
 	PSIMD_INTRINSIC void psimd_store2_f32(void* address, psimd_f32 value) {
@@ -413,11 +433,33 @@
 		address_f32[1] = value[1];
 	}
 
+	PSIMD_INTRINSIC void psimd_store3_s32(void* address, psimd_s32 value) {
+		int32_t* address_s32 = (int32_t*) address;
+		address_s32[0] = value[0];
+		address_s32[1] = value[1];
+		address_s32[2] = value[2];
+	}
+
+	PSIMD_INTRINSIC void psimd_store3_u32(void* address, psimd_u32 value) {
+		uint32_t* address_u32 = (uint32_t*) address;
+		address_u32[0] = value[0];
+		address_u32[1] = value[1];
+		address_u32[2] = value[2];
+	}
+
 	PSIMD_INTRINSIC void psimd_store3_f32(void* address, psimd_f32 value) {
 		float* address_f32 = (float*) address;
 		address_f32[0] = value[0];
 		address_f32[1] = value[1];
 		address_f32[2] = value[2];
+	}
+
+	PSIMD_INTRINSIC void psimd_store4_s32(void* address, psimd_s32 value) {
+		psimd_store_s32(address, value);
+	}
+
+	PSIMD_INTRINSIC void psimd_store4_u32(void* address, psimd_u32 value) {
+		psimd_store_u32(address, value);
 	}
 
 	PSIMD_INTRINSIC void psimd_store4_f32(void* address, psimd_f32 value) {
