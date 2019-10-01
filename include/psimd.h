@@ -690,13 +690,13 @@
 		#endif
 	}
 
-	PSIMD_INTRINSIC psimd_u8 psimd_blend_u8(psimd_u8 mask, psimd_u8 a, psimd_u8 b) {
+	PSIMD_INTRINSIC psimd_u8 psimd_blend_u8(psimd_s8 mask, psimd_u8 a, psimd_u8 b) {
 		#if defined(__ARM_NEON__) || defined(__ARM_NEON)
 			return (psimd_u8) vbslq_u8((uint8x16_t) mask, (uint8x16_t) a, (uint8x16_t) b);
 		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__)
 			return (psimd_u8) __builtin_wasm_bitselect(a, b, mask);
 		#else
-			return (mask & a) | (~mask & b);
+			return (psimd_u8) ((mask & (psimd_s8) a) | (~mask & (psimd_s8) b));
 		#endif
 	}
 	
@@ -710,13 +710,13 @@
 		#endif
 	}
 
-	PSIMD_INTRINSIC psimd_u16 psimd_blend_u16(psimd_u16 mask, psimd_u16 a, psimd_u16 b) {
+	PSIMD_INTRINSIC psimd_u16 psimd_blend_u16(psimd_s16 mask, psimd_u16 a, psimd_u16 b) {
 		#if defined(__ARM_NEON__) || defined(__ARM_NEON)
 			return (psimd_u16) vbslq_u16((uint16x8_t) mask, (uint16x8_t) a, (uint16x8_t) b);
 		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__)
 			return (psimd_u16) __builtin_wasm_bitselect(a, b, mask);
 		#else
-			return (mask & a) | (~mask & b);
+			return (psimd_u16) ((mask & (psimd_s16) a) | (~mask & (psimd_s16) b));
 		#endif
 	}
 	
@@ -730,13 +730,13 @@
 		#endif
 	}
 
-	PSIMD_INTRINSIC psimd_u32 psimd_blend_u32(psimd_u32 mask, psimd_u32 a, psimd_u32 b) {
+	PSIMD_INTRINSIC psimd_u32 psimd_blend_u32(psimd_s32 mask, psimd_u32 a, psimd_u32 b) {
 		#if defined(__ARM_NEON__) || defined(__ARM_NEON)
 			return (psimd_u32) vbslq_u32((uint32x4_t) mask, (uint32x4_t) a, (uint32x4_t) b);
 		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__)
 			return (psimd_u32) __builtin_wasm_bitselect(a, b, mask);
 		#else
-			return (mask & a) | (~mask & b);
+			return (psimd_u32) ((mask & (psimd_s32) a) | (~mask & (psimd_s32) b));
 		#endif
 	}
 	
@@ -746,7 +746,7 @@
 		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__)
 			return (psimd_f32) __builtin_wasm_bitselect(a, b, mask);
 		#else
-			return (psimd_f32) psimd_blend_s32(mask, (psimd_s32) a, (psimd_s32) b);
+			return (psimd_f32) ((mask & (psimd_s32) a) | (~mask & (psimd_s32) b));
 		#endif
 	}
 
