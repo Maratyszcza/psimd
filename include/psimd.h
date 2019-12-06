@@ -674,6 +674,10 @@
 		#endif
 	}
 
+	PSIMD_INTRINSIC psimd_f32 psimd_div_f32(psimd_f32 a, psimd_f32 b) {
+		return a / b;
+	}
+
 	/* Vector and */
 	PSIMD_INTRINSIC psimd_f32 psimd_andmask_f32(psimd_s32 mask, psimd_f32 v) {
 		return (psimd_f32) (mask & (psimd_s32) v);
