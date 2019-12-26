@@ -787,7 +787,7 @@
 	/* Vector absolute value */
 	PSIMD_INTRINSIC psimd_f32 psimd_abs_f32(psimd_f32 v) {
 		const psimd_s32 mask = (psimd_s32) psimd_splat_f32(-0.0f);
-		return (psimd_f32) ((psimd_s32) v & mask);
+		return (psimd_f32) ((psimd_s32) v & ~mask);
 	}
 
 	/* Vector negation */
