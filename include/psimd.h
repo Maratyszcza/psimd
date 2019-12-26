@@ -683,6 +683,11 @@
 		return (psimd_f32) (mask & (psimd_s32) v);
 	}
 
+	/* Vector and-not */
+	PSIMD_INTRINSIC psimd_f32 psimd_andnotmask_f32(psimd_s32 mask, psimd_f32 v) {
+		return (psimd_f32) (~mask & (psimd_s32) v);
+	}
+
 	/* Vector blend */
 	PSIMD_INTRINSIC psimd_s8 psimd_blend_s8(psimd_s8 mask, psimd_s8 a, psimd_s8 b) {
 		#if defined(__ARM_NEON__) || defined(__ARM_NEON)
