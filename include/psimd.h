@@ -667,7 +667,7 @@
 			return (psimd_f32) _mm_fmadd_ps((__m128) c, (__m128) a, (__m128) b);
 		#elif (defined(__x86_64__) || defined(__i386__) || defined(__i686__)) && defined(__FMA4__)
 			return (psimd_f32) _mm_macc_ps((__m128) c, (__m128) a, (__m128) b);
-		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__)
+		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__) && PSIMD_ENABLE_WASM_QFMA
 			return (psimd_f32) __builtin_wasm_qfma_f32x4(a, b, c);
 		#else
 			return a + b * c;
