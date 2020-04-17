@@ -28,7 +28,7 @@
 	#define PSIMD_INTRINSIC static
 #endif
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 	#if defined(__ARM_NEON__) || defined(__ARM_NEON)
 		#include <arm_neon.h>
 	#endif
@@ -78,7 +78,7 @@
 	#include <stdint.h>
 #endif
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 	#define PSIMD_HAVE_F64 0
 	#define PSIMD_HAVE_F32 1
 	#define PSIMD_HAVE_U8 1
