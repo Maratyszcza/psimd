@@ -664,9 +664,9 @@
 		#if defined(__aarch64__) || defined(__ARM_NEON__) && defined(__ARM_FEATURE_FMA)
 			return (psimd_f32) vfmaq_f32((float32x4_t) a, (float32x4_t) b, (float32x4_t) c);
 		#elif (defined(__x86_64__) || defined(__i386__) || defined(__i686__)) && defined(__FMA__)
-			return (psimd_f32) _mm_fmadd_ps((__m128) c, (__m128) a, (__m128) b);
+			return (psimd_f32) _mm_fmadd_ps((__m128) b, (__m128) c, (__m128) a);
 		#elif (defined(__x86_64__) || defined(__i386__) || defined(__i686__)) && defined(__FMA4__)
-			return (psimd_f32) _mm_macc_ps((__m128) c, (__m128) a, (__m128) b);
+			return (psimd_f32) _mm_macc_ps((__m128) b, (__m128) c, (__m128) a);
 		#elif defined(__wasm__) && defined(__wasm_simd128__) && defined(__clang__) && PSIMD_ENABLE_WASM_QFMA
 			return (psimd_f32) __builtin_wasm_qfma_f32x4(a, b, c);
 		#else
